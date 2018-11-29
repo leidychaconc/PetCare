@@ -1,0 +1,52 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head><title>Especie</title>
+	<f:metadata>
+        <f:viewParam id="id" name="id" value="#{especieBean.id}"/>
+        <f:viewAction action="#{especieBean.loadData()}" />
+ 	</f:metadata>
+
+</h:head> 
+<body> 
+	<h1>Mantenimiento Especie</h1>
+	<h:form>
+		<h:panelGrid>
+		
+			<h:outputLabel value="Ingrese la Especie:" />
+			<h:inputText value="#{especieBean.newEspecie.espeNombre}" />
+		
+		<h:commandButton action="#{especieBean.guardar()}" value="Guardar" />
+		
+		</h:panelGrid>
+	</h:form>
+	
+	<h:form>
+	<h:dataTable var="_especie" value="#{especieBean.especies}"
+           rendered="#{not empty especieBean.especies}"
+            styleClass="simpletablestyle"> 
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                #{_especie.espeId}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                #{_especie.espeNombre}
+            </h:column>
+                       
+            
+    		<h:column>
+    		 <f:facet name="header">ACCIONES</f:facet>
+     		<h:commandButton action="#{especieBean.borrar(_especie.espeId)}" value="Borrar" />
+    		 <h:commandButton action="#{especieBean.editar(_especie)}" value="Editar" />
+    		</h:column>
+          
+        </h:dataTable> 
+	</h:form>
+	
+
+</body> 
+</html>

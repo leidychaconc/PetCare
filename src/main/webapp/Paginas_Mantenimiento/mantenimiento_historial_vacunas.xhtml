@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://java.sun.com/jsf/core"> 
+
+<h:head>
+	<h:outputStylesheet library="css" name="screen.css"  />
+	<f:metadata>
+        <f:viewParam id="id" name="id" value="#{historialVacunasBean.id}"/>
+        <f:viewAction action="#{historialVacunasBean.loadData}" />
+ 	</f:metadata>
+	
+	<center>
+	<h1>Historial Vacunacion General</h1>
+	</center>
+</h:head> 
+<body> 
+<center>
+	<h:form id = "form1">
+		<h:panelGrid columns="3"> 
+			
+			<h:outputLabel value="Fecha de Aplicacion:" />
+			<h:inputText id="txtFechaAplicacion" value="#{historialVacunasBean.newHistorialVacunas.fecha_aplicacion}"/>
+			<h:message for="txtFechaAplicacion"/>
+			
+			
+			<h:outputLabel value="Fecha de proxima aplicacion:" />
+			<h:inputText id="txtFechaProxAplicacion" value="#{historialVacunasBean.newHistorialVacunas.fecha_proxima_aplicacion}"/>
+			<h:message for="txtFechaProxAplicacion"/>
+			
+			
+			<h:outputLabel value="Peso Mascota en la aplicacion: kg" />
+			<h:inputText id="txtPesoMascota" value="#{historialVacunasBean.newHistorialVacunas.peso}"/>
+			<h:message for="txtPesoMascota"/>
+			
+			
+			<h:outputLabel value="Descripcion:" />
+			<h:inputText id="txtDescripcion" value="#{historialVacunasBean.newHistorialVacunas.descripcion}"/>
+			<h:message for="txtDescripcion"/>
+			
+			
+			<h:outputLabel for="combVacunas" value="Vacuna: " />
+			<h:selectOneMenu id="combVacunas" value="#{historialVacunasBean.newHistorialVacunas.vacuna}">
+				<f:selectItems value="#{historialVacunasBean.listVacunas}" 
+							   var="vacuna"
+							   itemValue="#{vacuna}"
+							   itemLabel="#{vacuna.nombre}"/>
+				<f:converter converterId="ec.edu.ups.petcare.converter.VacunaConverter" />	
+				<f:ajax render="aux"/>   
+			</h:selectOneMenu>
+			<h:message for="combVacunas"/>
+			
+			
+			<h:commandButton value="Guardar" action="#{historialVacunasBean.guardar()}" />
+	
+			
+		</h:panelGrid>
+		
+		<h:messages globalOnly="true"/>
+	
+	</h:form>
+	
+	<h:form>
+		<h:dataTable var="_hisVacuna" value="#{historialVacunasBean.hisVacunas}"
+            rendered="#{not empty historialVacunasBean.hisVacunas}"
+            styleClass="simpletablestyle">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                #{_hisVacuna.id}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Fecha Aplicacion</f:facet>
+                #{_hisVacuna.fecha_aplicacion}
+            </h:column>
+            
+            
+            <h:column>
+                <f:facet name="header">Fecha proxima Aplicacion</f:facet>
+                #{_hisVacuna.fecha_proxima_aplicacion}
+            </h:column>
+            
+            
+            <h:column>
+                <f:facet name="header">Peso Mascota</f:facet>
+                #{_hisVacuna.peso}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Descripcion</f:facet>
+                #{_hisVacuna.descripcion}
+            </h:column>
+            
+             <h:column>
+                <f:facet name="header">Vacuna</f:facet>
+                #{_hisVacuna.vacuna.nombre}
+            </h:column>
+            
+            
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton value="Modificar" action="#{historialVacunasBean.editar(_hisVacuna)}">
+                	<p:ajax update="combVacunas"/>
+                </h:commandButton>
+                <h:commandButton value="Eliminar" action="#{historialVacunasBean.eliminar(_hisVacuna.id)}"/>
+            </h:column>
+            
+            <f:facet name="footer">
+            	<!-- <h:commandButton action="mantenimiento_citas_medicas" value="Crear Cita"/> -->
+            </f:facet>
+        </h:dataTable>
+        
+        <h:outputLabel id="h" value="#{historialVacunasBean.newHistorialVacunas.vacuna.nombre}" />
+        
+	</h:form>
+	
+</center>
+	
+</body> 
+</html>

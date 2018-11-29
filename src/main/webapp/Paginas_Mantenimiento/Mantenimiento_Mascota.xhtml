@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://java.sun.com/jsf/core"> 
+
+<h:head> <title>Mascota</title>
+	<f:metadata> 
+        <f:viewParam id="id" name="id" value="#{mascotaBean.id}" />
+        <f:viewParam id="id2" name="id2" value="#{mascotaBean.id2}" />
+        <f:viewAction action="#{mascotaBean.loadData()}" />
+ 	</f:metadata>
+ </h:head> 
+<body> 
+	<h:form id = "form1" id2= "form1">
+		<h:panelGrid>
+		
+			<h:outputLabel value="Nombre de la Mascota:" />
+			<h:inputText value="#{mascotaBean.newMascota.mascoNombre}" />
+			
+			<h:outputLabel value="Edad:" />
+			<h:inputText value="#{mascotaBean.newMascota.mascoEdad}" />
+			
+			<h:outputLabel value="Sexo:" />
+			<h:inputText value="#{mascotaBean.newMascota.mascoSexo}" />
+			
+			<h:outputLabel value="Esterelizado:" />
+			<h:inputText value="#{mascotaBean.newMascota.mascoEsterizado}" />
+			
+			<h:outputLabel value="Color:" />
+			<h:inputText value="#{mascotaBean.newMascota.mascoColor}" />
+			
+			<h:outputLabel value="Alergias:" />
+			<h:inputText value="#{mascotaBean.newMascota.mascoAlergias}" />
+			
+			
+			
+			
+			<h:outputLabel for="combPersona" value="Persona: " />
+			<h:selectOneMenu id="combPersona" value="#{mascotaBean.newMascota.persona}">
+				<f:selectItems value="#{mascotaBean.listPersonas}" 
+							   var="persona"
+							   itemValue="#{persona}"
+							   itemLabel="#{persona.cliNombre}"/>
+				<f:converter  converterId="ec.edu.ups.petcare.converter.PersonaConverter" />	
+				<f:ajax render="aux"/>   
+			</h:selectOneMenu>
+			<h:message for="combPersona"/>
+			
+			
+			
+			
+			
+			<h:outputLabel for="combRaza" value="Raza: " />
+			<h:selectOneMenu id="combRaza" value="#{mascotaBean.newMascota.raza}">
+				<f:selectItems value="#{mascotaBean.listRazas}" 
+							   var="raza"
+							   itemValue="#{raza}"
+							   itemLabel="#{raza.razaNombre}"/>
+				<f:converter  converterId="ec.edu.ups.petcare.converter.RazaConverter" />	
+				<f:ajax render="aux2"/>   
+			</h:selectOneMenu>
+			<h:message for="combRaza"/>
+			 
+						
+		<h:commandButton action="#{mascotaBean.guardar()}" value="Guardar" />
+		
+		</h:panelGrid>
+	</h:form>
+	
+	
+	<h:form>
+	<h:dataTable var="_mascota" value="#{mascotaBean.mascotas}"
+           rendered="#{not empty mascotaBean.mascotas}"
+            styleClass="simpletablestyle"> 
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                #{_mascota.mascoId}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                #{_mascota.mascoNombre}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Edad</f:facet>
+                #{_mascota.mascoEdad}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Sexo</f:facet>
+                #{_mascota.mascoSexo}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Color</f:facet>
+                #{_mascota.mascoColor}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Esterelizado</f:facet>
+                #{_mascota.mascoEsterizado}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Alergias</f:facet>
+                #{_mascota.mascoAlergias}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Persona</f:facet>
+                #{_mascota.persona.cliNombre}
+            </h:column>
+            
+              <h:column>
+                <f:facet name="header">Raza</f:facet>
+                #{_mascota.raza.razaNombre}
+            </h:column>
+            
+    		<h:column>
+    		 <f:facet name="header">ACCIONES</f:facet>
+     		<h:commandButton action="#{mascotaBean.editar(_mascota)}" value="Editar" >
+     			<p:ajax update="combPersona" />
+     			<p:ajax update="combRaza"/>
+     		</h:commandButton>	
+     		<h:commandButton action="#{mascotaBean.borrar(_mascota.mascoId)}" value="Borrar" />
+    		 
+    		</h:column>
+          
+        </h:dataTable> 
+        
+        <h:outputLabel id="h" value="#{mascotaBean.newMascota.persona.cliNombre}" />
+        <h:outputLabel id2="h" value="#{mascotaBean.newMascota.raza.razaNombre}" />
+	</h:form>
+ 	
+
+</body> 
+</html>

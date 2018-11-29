@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<h:outputStylesheet library="css" name="screen.css"  />
+	<center><h1>Citas Médicas</h1></center>
+</h:head> 
+<body> 
+<center>
+	<h:form>
+		<h:panelGrid columns="3">
+			
+				
+			<h:outputLabel value="Fecha" />
+			<h:inputText id="txtFecha" value="#{citaBean.newCitaMedica.fecha}"/>
+			<h:message for="txtFecha"/>
+			
+			<h:outputLabel value="Hora" />
+			<h:inputText id="txtHora" value="#{citaBean.newCitaMedica.hora}"/>
+			<h:message for="txtHora"/>
+			
+			
+			<h:outputLabel value="Motivo" />
+			<h:inputText id="txtMotivo" value="#{citaBean.newCitaMedica.motivo}"/>
+			<h:message for="txtMotivo"/>
+			
+			
+			<h:outputLabel value=" " />
+			<h:commandButton value="Guardar" action="#{citaBean.guardar()}" />
+		
+		</h:panelGrid>
+		
+		<h:messages globalOnly="true"/>
+	
+	
+	</h:form>
+	<h:form>
+		<h:dataTable var="_cita" value="#{citaBean.citas}"
+            rendered="#{not empty citaBean.citas}"
+            styleClass="simpletablestyle">
+            <h:column>
+                <f:facet name="header">Id</f:facet>
+                #{_cita.id}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Fecha</f:facet>
+                #{_cita.fecha}
+            </h:column>
+            
+            
+            <h:column>
+                <f:facet name="header">Hora</f:facet>
+                #{_cita.hora}
+            </h:column>
+            
+            
+            <h:column>
+                <f:facet name="header">Motivo</f:facet>
+                #{_cita.motivo}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Acciones</f:facet>
+                <h:commandButton value="Modificar"/>
+                <h:commandButton value="Eliminar" action = "#{citaBean.eliminar(_cita.id)}"/>
+            </h:column>
+            
+            <f:facet name="footer">
+            	<h:commandButton action="mantenimiento_citas_medicas" value="Crear Cita"/>
+            </f:facet>
+        </h:dataTable>
+	</h:form>
+</center>
+</body> 
+</html>

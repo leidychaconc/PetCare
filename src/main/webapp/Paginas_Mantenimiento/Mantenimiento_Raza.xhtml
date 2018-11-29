@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://java.sun.com/jsf/core"> 
+
+<h:head><title>Raza</title>
+	<f:metadata>
+        <f:viewParam id="id" name="id" value="#{razaBean.id}"/>
+        <f:viewAction action="#{razaBean.loadData()}" />
+ 	</f:metadata>
+</h:head> 
+<body> 
+	<h:form id = "form1">
+		<h:panelGrid columns="2">
+		
+			<h:outputLabel value="Ingrese la Raza:" />
+			<h:inputText value="#{razaBean.newRaza.razaNombre}" />
+			
+			
+			
+			<h:outputLabel for="combEspecie" value="Especie: " />
+			<h:selectOneMenu id="combEspecie" value="#{razaBean.newRaza.especie}">
+				<f:selectItems value="#{razaBean.listEspecies}" 
+							   var="especie"
+							   itemValue="#{especie}"
+							   itemLabel="#{especie.espeNombre}"/>
+				<f:converter  converterId="ec.edu.ups.petcare.converter.EspecieConverter" />	
+				<f:ajax render="aux"/>   
+			</h:selectOneMenu>
+			<h:message for="combEspecie"/>
+			
+			
+			
+		
+		<h:commandButton action="#{razaBean.guardar()}" value="Guardar" />
+		
+		</h:panelGrid>
+	</h:form>
+	
+	<h:form>
+	<h:dataTable var="_raza" value="#{razaBean.razas}" 
+	rendered="#{not empty razaBean.razas}"
+            styleClass="simpletablestyle"> 
+            <h:column>
+                <f:facet name="header">Codigo</f:facet>
+                #{_raza.razaId}
+            </h:column>
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                #{_raza.razaNombre}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Especie</f:facet>
+                #{_raza.especie.espeNombre}
+            </h:column>
+                                  
+            
+    		<h:column>
+    		 <f:facet name="header">ACCIONES</f:facet>
+     		
+    		 <h:commandButton action="#{razaBean.editar(_raza)}" value="Editar" >
+    		 	<p:ajax update="combEspecie"/>
+    		 </h:commandButton>
+    		 <h:commandButton action="#{razaBean.borrar(_raza.razaId)}" value="Borrar" />
+    		</h:column>
+          
+        </h:dataTable> 
+        
+        <h:outputLabel id="h" value="#{razaBean.newRaza.especie.espeNombre}" />
+	</h:form>
+	
+
+</body> 
+</html>

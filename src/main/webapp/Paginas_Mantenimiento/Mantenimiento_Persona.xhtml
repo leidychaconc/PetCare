@@ -1,0 +1,106 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head><title>Registrar Persona</title>
+	<f:metadata>
+        <f:viewParam id="id" name="id" value="#{personaBean.id}"/>
+        <f:viewAction action="#{personaBean.loadData()}" />
+ 	</f:metadata>
+
+</h:head> 
+<body> 
+<h1>Mantenimiento Persona</h1>
+<h:form>
+	<h:panelGrid columns="3">
+		<h:outputLabel value="Cedula:" for="cedula"/>
+		<h:inputText value="#{personaBean.newPersona.cliCedula}" id="cedula" />
+		<h:message for="cedula"/>
+		
+		<h:outputLabel value="Nombre:" for="nombre"/>
+		<h:inputText value="#{personaBean.newPersona.cliNombre}" id="nombre" />
+		<h:message for="nombre"/>
+		
+		<h:outputLabel value="Apellido:" for="apellido"/>
+		<h:inputText value="#{personaBean.newPersona.cliApellido}" id="apellido" />
+		<h:message for="apellido"/>
+		
+		<h:outputLabel value="Email:" for="email"/>
+		<h:inputText value="#{personaBean.newPersona.cliEmail}" id="email" />
+		<h:message for="email"/>
+		
+		<h:outputLabel value="Telefono:" for="telefono"/>
+		<h:inputText value="#{personaBean.newPersona.cliTelefono}" id="telefono" />
+		<h:message for="telefono"/>
+		
+		<h:outputLabel value="Celular:" for="celular"/>
+		<h:inputText value="#{personaBean.newPersona.cliCelular}" id="celular" />
+		<h:message for="celular"/>
+		
+		<h:outputLabel value="Direccion:" for="direccion"/>
+		<h:inputText value="#{personaBean.newPersona.cliDireccion}" id="direccion" />
+		<h:message for="direccion"/>
+		
+		
+		<h:commandButton  action="#{personaBean.guardar()}" value="Guardar" />
+		
+	</h:panelGrid>
+		
+</h:form>
+	
+	<h:form>
+		<h:dataTable var="_persona" value="#{personaBean.personas}"
+      
+            styleClass="simpletablestyle">
+            <h:column>
+                <f:facet name="header">Cedula</f:facet>
+                #{_persona.cliCedula}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Nombre</f:facet>
+                #{_persona.cliNombre}
+            </h:column>
+            
+            
+            <h:column>
+                <f:facet name="header">Apellido</f:facet>
+                #{_persona.cliApellido}
+            </h:column>
+            
+            
+            <h:column>
+                <f:facet name="header">Email</f:facet>
+                #{_persona.cliEmail}
+            </h:column>
+            
+            <h:column>
+                <f:facet name="header">Telefono</f:facet>
+                #{_persona.cliTelefono}
+            </h:column>
+            
+             <h:column>
+                <f:facet name="header">Celular</f:facet>
+                #{_persona.cliCelular}
+            </h:column>
+            
+             <h:column>
+                <f:facet name="header">Direccion</f:facet>
+                #{_persona.cliDireccion}
+            </h:column>
+            
+            
+            
+            <h:column>
+            <f:facet name="header">Acciones</f:facet>
+    		   <h:commandButton action="#{personaBean.editar(_persona)}" value="Editar" />
+               <h:commandButton action = "#{personaBean.eliminar(_persona.cliCedula)}" value="Eliminar" />
+            </h:column>
+            
+           
+        </h:dataTable>
+	</h:form>
+</body> 
+</html>
